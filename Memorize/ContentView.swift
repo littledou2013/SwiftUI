@@ -8,31 +8,38 @@
 import SwiftUI
 
 struct ContentView: View {
-    var viewModel: EmojiMemoryGame
+    @ObservedObject var viewModel: EmojiMemoryGame
     var body: some View {
         HStack {
+            
             return ForEach(viewModel.cards) { card in
-                CardView(card: card).onTapGesture {
-                    viewModel.choose(card: card)
+                return CardView(card: card).onTapGesture {
+                    self.viewModel.choose(card: card)
                 }
             }
-        }.foregroundColor(.orange).padding(.top, 100).font(.largeTitle)
+        }.foregroundColor(.orange).font(.largeTitle)
     }
 }
 
 struct CardView: View {
     var card: MemoryGame<String>.Card
     var body: some View {
-        ZStack {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: 30).fill().foregroundColor(.white)
-                RoundedRectangle(cornerRadius:30).stroke(lineWidth:3)
-                Text(card.content)
-            } else {
-                RoundedRectangle(cornerRadius: 30)
-            }
+        GeometryReader { geometry in
+            ZStack {
+                if card.isFaceUp {
+                    RoundedRectangle(cornerRadius: 30).fill().foregroundColor(.white)
+                    RoundedRectangle(cornerRadius:cornerRadius).stroke(lineWidth:edgeLineWidth)
+                    Text(card.content)
+                } else {
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                }
+            }.font(Font.system(size: min(geometry.size.width, geometry.size.height) * fontScaleFactor))
         }
     }
+    
+    let cornerRadius: CGFloat = 10
+    let edgeLineWidth: CGFloat = 3
+    let fontScaleFactor: CGFloat = 0.75
 }
 
 
