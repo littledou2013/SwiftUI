@@ -16,7 +16,7 @@ struct MemoryGame<ContentType> {
         cards[index].isFaceUp = !cards[index].isFaceUp
     }
     
-    func index(of card: Card) -> Int {
+    private func index(of card: Card) -> Int {
         for index in 0..<cards.count {
             if cards[index].id == card.id {
                 return index
