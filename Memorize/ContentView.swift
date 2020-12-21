@@ -10,12 +10,9 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     var body: some View {
-        HStack {
-            
-            return ForEach(viewModel.cards) { card in
-                return CardView(card: card).onTapGesture {
-                    self.viewModel.choose(card: card)
-                }
+        Grid(viewModel.cards) { card in
+            return CardView(card: card).onTapGesture {
+                self.viewModel.choose(card: card)
             }
         }.foregroundColor(.orange).font(.largeTitle)
     }
