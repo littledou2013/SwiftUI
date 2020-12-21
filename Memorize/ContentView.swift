@@ -14,6 +14,7 @@ struct ContentView: View {
             return CardView(card: card).onTapGesture {
                 self.viewModel.choose(card: card)
             }
+            .padding()
         }.foregroundColor(.orange).font(.largeTitle)
     }
 }
