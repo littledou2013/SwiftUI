@@ -14,7 +14,7 @@ struct ContentView: View {
             return CardView(card: card).onTapGesture {
                 self.viewModel.choose(card: card)
             }
-            .padding()
+            .padding(5)
         }.foregroundColor(.orange).font(.largeTitle)
     }
 }
@@ -27,9 +27,13 @@ struct CardView: View {
                 if card.isFaceUp {
                     RoundedRectangle(cornerRadius: 30).fill().foregroundColor(.white)
                     RoundedRectangle(cornerRadius:cornerRadius).stroke(lineWidth:edgeLineWidth)
-                    Text(card.content)
+                    Pie(startAngle: Angle.degrees(0), endAngle: Angle.degrees(110), clockwise: true).padding(5).opacity(0.4)
+                   // Text(card.content).foregroundColor(Color(UIColor.blue))
+                    Image(systemName:"printer.dotmatrix.fill").foregroundColor(.gray).imageScale(.small)
                 } else {
-                    RoundedRectangle(cornerRadius: cornerRadius)
+                    if card.isMatched == false {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                    }
                 }
             }.font(Font.system(size: min(geometry.size.width, geometry.size.height) * fontScaleFactor))
         }
@@ -43,6 +47,8 @@ struct CardView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(viewModel: EmojiMemoryGame())
+        let game = EmojiMemoryGame()
+        game.choose(card: game.cards[3])
+        return ContentView(viewModel: game)
     }
 }

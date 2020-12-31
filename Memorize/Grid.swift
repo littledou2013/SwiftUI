@@ -24,30 +24,26 @@ struct Grid<Item, ItemView>: View where Item: Identifiable, ItemView: View{
         
     }
     
-    func body(for layout: GridLayout) -> some View {
+    private func body(for layout: GridLayout) -> some View {
         return ForEach(items) { item in
             body(for: item, in: layout)
         }
     }
 
-    func body(for item: Item, in layout: GridLayout) -> some View {
-        let index = self.index(of: item)
+    private func body(for item: Item, in layout: GridLayout) -> some View {
+        let index = items.firstIndex(matching: item)!
         return viewForItem(item).frame(width: layout.itemSize.width, height: layout.itemSize.height).position(layout.location(ofItemAt: index))
-    }
-    
-    func index(of item: Item) -> Int {
-        for index in 0..<items.count {
-            if items[index].id == item.id {
-                return index
-            }
-        }
-        return 0
     }
 }
 
 
 
-
+enum FastFoodMenuItem {
+    case hamburger(numberOfPatties: Int)
+    case fries(size: CGSize)
+    case drink(String, ounces: Int)
+    case cookie
+}
 
 
 

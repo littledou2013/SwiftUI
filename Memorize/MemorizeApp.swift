@@ -10,9 +10,34 @@ import SwiftUI
 @main
 struct MemorizeApp: App {
     var body: some Scene {
-        WindowGroup {
-            let emojiMemoryGame = EmojiMemoryGame()
-            ContentView(viewModel: emojiMemoryGame)
+        var add = Add()
+        print(add)
+        print(address(o: &add.a))
+        add.a = 5
+        print(add)
+        print(address(o: &add.a))
+        add.b = 10
+        print(add)
+        print(address(o: &add))
+        return WindowGroup {
+            UserView()
         }
     }
 }
+
+struct Add {
+    var a = 0
+    var b: Int {
+        set(newValue) {
+            b = newValue
+        }
+    }
+    mutating func setA(d: Int) {
+        a = d
+    }
+}
+
+func address(o: UnsafeRawPointer) -> String {
+    return String.init(format: "%018p", Int(bitPattern: o))
+}
+
