@@ -27,10 +27,19 @@ struct MemorizeApp: App {
 
 struct Add {
     var a = 0
-    var b: Int {
-        set(newValue) {
-            b = newValue
+    var b: Int = 0 {
+        willSet {
+            print(newValue)
         }
+        didSet {
+            print(oldValue)
+        }
+//        get {
+//            return 1
+//        }
+//        set {
+//
+//        }
     }
     mutating func setA(d: Int) {
         a = d
@@ -39,5 +48,9 @@ struct Add {
 
 func address(o: UnsafeRawPointer) -> String {
     return String.init(format: "%018p", Int(bitPattern: o))
+}
+
+class A: NSObject {
+    var b: Int = 1
 }
 
